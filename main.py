@@ -10,7 +10,7 @@ def human_delay(min_seconds=1, max_seconds=3.5):
 
 def discord_alert(product_name):
     webhook_url = "https://discord.com/api/webhooks/1564150826291699836/IDR98QpaLU1j0tOefomea_hPXt6N9HpUowNdsMp6G4wHMcQ_W2JgpVQopD5jd_CR22pi"
-    payload = {"content": f"Match Found!** Possible stock match on Amazon.ca:\n`{product_name}`"
+    payload = {"content": f"🚨 **Match Found!** Possible stock match on Amazon.ca:\n`{product_name}`"
            }
     try:
         response = requests.post(webhook_url, json=payload)
@@ -45,7 +45,7 @@ def run_amazon_check():
             lower_title = title.lower()
             
           
-            if "huawei" in lower_title and "gt 7" in lower_title:
+            if "huawei" in lower_title and "gt 7 pro" in lower_title:
                 print(f"MATCH FOUND: {title}")
                 discord_alert(title)
                 match_found = True
@@ -59,7 +59,7 @@ def run_amazon_check():
 schedule.every(4).hours.do(run_amazon_check)
 run_amazon_check()
 
-print("Scheduler active. will run every 4 hours")
+print("Scheduler active. Will run every 4 hours")
 while True:
     schedule.run_pending()
     time.sleep(1)
