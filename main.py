@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
+from bs4 import BeautifulSoup
 import requests
-
+import schedule 
 import time
 import random
 
@@ -23,10 +24,17 @@ def discord_alert(product_name):
 def run_amazon_check():
     print("starting amazon check")     
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+        browser = p.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled"]
+        )
+        page = browser.new_context()
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            viewport={"width": 1920, "height": 1080}
+        )        
         print("Going to Amazon.ca")
-        page.goto('https://www.amazon.ca')
+        page.goto('https://www.amazon.ca/s?k=HUAWEI+WATCH+GT+7+Pro', timeout=60000)
         human_delay(2, 5)
         print("searching for HUAWEI WATCH GT 7 Pro")
         search_bar = page.locator('#twotabsearchtextbox')
@@ -34,7 +42,11 @@ def run_amazon_check():
         search_bar.press('Enter')
         page.wait_for_load_state('networkidle')
         human_delay(2, 5)
-
+        page_content = page.content().lower()
+        if "api-services-support@amazon.com" in page_content or "enter the characters you see below" in page_content:
+            print("BLOCKED: Amazon served a CAPTCHA / Robot Check page.")
+            browser.close()
+            return
         product_titles = page.locator('h2 a span').all_inner_texts()
     
         print(f"Scanning {len(product_titles)} results for matches")
