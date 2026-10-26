@@ -1,7 +1,6 @@
 from playwright.sync_api import sync_playwright
-from bs4 import BeautifulSoup
 import requests
-import schedule 
+
 import time
 import random
 
