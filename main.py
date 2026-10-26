@@ -56,10 +56,6 @@ def run_amazon_check():
         browser.close()
         print("Check cycle complete. Browser closed")  
 
-schedule.every(4).hours.do(run_amazon_check)
-run_amazon_check()
 
-print("Scheduler active. Will run every 4 hours")
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+if __name__ == "__main__":
+    run_amazon_check())
