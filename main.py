@@ -24,15 +24,9 @@ def discord_alert(product_name):
 def run_amazon_check():
     print("starting amazon check")     
     with sync_playwright() as p:
-        browser = p.chromium.launch(
-            headless=True,
-            args=["--disable-blink-features=AutomationControlled"]
-        )
-        page = browser.new_context()
-        context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            viewport={"width": 1920, "height": 1080}
-        )        
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()        
+        
         print("Going to Amazon.ca")
         page.goto('https://www.amazon.ca/s?k=HUAWEI+WATCH+GT+7+Pro', timeout=60000)
         human_delay(2, 5)
