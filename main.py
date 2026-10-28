@@ -48,7 +48,9 @@ def run_amazon_check():
           
             if "huawei" in lower_title and "gt 7 pro" in lower_title:
                 if "telegram" in lower_title or "join" in lower_title or "tucos" in lower_title:
-                    print(f"match found {title}")
+                    print(f"ignore spam listing: {title}")
+                    continue
+                print(f"match found {title}")
                 discord_alert(title)
                 match_found = True
                 break  
