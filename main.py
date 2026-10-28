@@ -47,6 +47,9 @@ def run_amazon_check():
         for title in product_titles:
             lower_title = title.lower()
             
+            if re.search(r'(https?://|t\.me/|telegram|join|@[a-zA-Z0-9_]+)', lower_title):
+                print(f"Ignored spam pattern in title: {title}")
+                continue            
           
             if "huawei" in lower_title and "gt 7 pro" in lower_title:
                 if "telegram" in lower_title or "join" in lower_title or "tucos" in lower_title:
@@ -56,9 +59,7 @@ def run_amazon_check():
                 discord_alert(title)
                 match_found = True
                 break  
-            if re.search(r'(https?://|t\.me/|telegram|join|@[a-zA-Z0-9_]+)', lower_title):
-                print(f"Ignored spam pattern in title: {title}")
-                continue
+
         if not match_found:
             print("No matching products found in this check cycle")
             
