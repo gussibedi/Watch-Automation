@@ -58,7 +58,7 @@ def run_amazon_check():
                 break  
             if re.search(r'(https?://|t\.me/|telegram|join|@[a-zA-Z0-9_]+)', lower_title):
                 print(f"Ignored spam pattern in title: {title}")
-            continue
+                continue
         if not match_found:
             print("No matching products found in this check cycle")
             
