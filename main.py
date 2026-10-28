@@ -1,3 +1,5 @@
+from turtle import title
+
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import requests
@@ -46,10 +48,10 @@ def run_amazon_check():
         match_found = False
         for title in product_titles:
             lower_title = title.lower()
-            
-            if re.search(r'(https?://|t\.me/|telegram|join|@[a-zA-Z0-9_]+)', lower_title):
+
+            if re.search(r'(https?://|t\.me/|telegram|join|tucos|a-tools|@[a-zA-Z0-9_]+)', lower_title):
                 print(f"Ignored spam pattern in title: {title}")
-                continue            
+                continue       
           
             if "huawei" in lower_title and "gt 7 pro" in lower_title:
                 if "telegram" in lower_title or "join" in lower_title or "tucos" in lower_title:
