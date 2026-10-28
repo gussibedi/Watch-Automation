@@ -4,6 +4,8 @@ import requests
 import schedule 
 import time
 import random
+import re
+
 
 def human_delay(min_seconds=1, max_seconds=3.5):
     time.sleep(random.uniform(min_seconds, max_seconds))
@@ -54,6 +56,9 @@ def run_amazon_check():
                 discord_alert(title)
                 match_found = True
                 break  
+            if re.search(r'(https?://|t\.me/|telegram|join|@[a-zA-Z0-9_]+)', lower_title):
+                print(f"Ignored spam pattern in title: {title}")
+            continue
         if not match_found:
             print("No matching products found in this check cycle")
             
